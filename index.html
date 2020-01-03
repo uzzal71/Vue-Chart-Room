@@ -55,6 +55,9 @@
 
     database.ref('who').child('am/i').set('not alex')
 
+    database.ref('articles/' + articleId)
+    database.ref('articles').child('articleId')
+
     new Vue({
     el: "#chat",
     data: {
