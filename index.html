@@ -101,17 +101,37 @@
     },
     created() {
       // value = snaoshot.val() | snapshot.key
-        messagesRef.on('child_added', snapshot => this.messages.push({...snapshot.val(), id: snapshot.key}))
+        messagesRef.on('child_added', snapshot => {
+          this.messages.push({...snapshot.val(), id: snapshot.key})
+          if(snapshot.val().nickname !== this.nickname) {
+            nativeToast({
+              message: `New message by ${snapshot.val().nickname}`,
+              type: 'success'
+            })
+          }
+        })
         // remove event changed listener
         messagesRef.on('child_removed', snapshot => {
           const deleteMessage = this.messages.find(message => message.id === snapshot.key)
           const index = this.messages.indexOf(deleteMessage)
           this.messages.splice(index, 1)
+          if (snapshot.val().nickname !== this.nickname) {
+            nativeToast({
+              message: `Message delete by ${snapshot.val().nickname}`,
+              type: 'warning'
+            })
+          }
         })
         // update listen
         messagesRef.on('child_changed', snapshot => {
         const updateMessage = this.messages.find(message => message.id === snapshot.key)
           updateMessage.text = snapshot.val().text
+          if (snapshot.val().nickname !== this.nickname) {
+            nativeToast({
+              message: `Message edited by ${snapshot.val().nickname}`,
+              type: 'info'
+            })
+          }
         })
     }
     })
