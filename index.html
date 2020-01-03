@@ -55,6 +55,8 @@
 
     const messagesRef = database.ref('messages')
 
+    messagesRef.child("-LxevdTGqPE-dMyeHLZi").remove()
+
     new Vue({
     el: "#chat",
     data: {
