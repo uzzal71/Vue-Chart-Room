@@ -37,6 +37,22 @@
 
 
 <script type="text/javascript">
+    // Your web app's Firebase configuration
+    const config = {
+        apiKey: "AIzaSyDAsJSUt1MinKYhPzQ1yvfncTsvBl2jQ0c",
+        authDomain: "vue-chart-room.firebaseapp.com",
+        databaseURL: "https://vue-chart-room.firebaseio.com",
+        projectId: "vue-chart-room",
+        storageBucket: "vue-chart-room.appspot.com",
+        messagingSenderId: "286957013605",
+        appId: "1:286957013605:web:89172a8fded3405aedd48c",
+        measurementId: "G-HZJ50QQ3TQ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(config);
+
+    const database = firebase.database();
+
   new Vue({
     el: "#chat",
     data: {
