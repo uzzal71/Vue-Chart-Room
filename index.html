@@ -71,7 +71,7 @@
     data: {
         messages: [],
         messageText: '',
-        nickname: 'Uzzalroy',
+        nickname: 'Uzzal roy',
         editingMessage: null
     },
     methods: {
@@ -103,6 +103,11 @@
           const deleteMessage = this.messages.find(message => message.id === snapshot.key)
           const index = this.messages.indexOf(deleteMessage)
           this.messages.splice(index, 1)
+        })
+        // update listen
+        messagesRef.on('child_changed', snapshot => {
+        const updateMessage = this.messages.find(message => message.id === snapshot.key)
+          updateMessage.text = snapshot.val().text
         })
     }
     })
