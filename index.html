@@ -20,14 +20,20 @@
       <!-- edit text area -->
       <textarea v-else v-model="messageText" class="form-control"></textarea>
       <!-- actions -->
-      <a @click.prevent="deleteMessage(message)" href="#" class="cart-link">Delete</a>
-      <a @click.prevent="editMessage(message)" href="#" class="cart-link">Edit</a>
+      <div v-if="message !== editingMessage">
+        <a @click.prevent="deleteMessage(message)" href="#" class="cart-link">Delete</a>
+        <a @click.prevent="editMessage(message)" href="#" class="cart-link">Edit</a>
+      </div>
+      <div v-else>
+        <a @click.prevent="cancelMessage" href="#" class="cart-link">Cancel</a>
+        <a @click.prevent="updateMessage" href="#" class="cart-link">Update</a>
+      </div>
     </div>
   </div>
 
   <hr>
   <!-- New Message -->
-  <form @submit.prevent="storeMessage">
+  <form v-if="!editingMessage" @submit.prevent="storeMessage">
     <div class="form-group">
       <label>Message:</label>
       <textarea v-model="messageText" class="form-control"></textarea>
@@ -79,6 +85,14 @@
         editMessage(message) {
           this.editingMessage = message
           this.messageText = message.text
+        },
+        cancelMessage() {
+          this.editingMessage = null
+          this.messageText = ''
+        },
+        updateMessage() {
+          messagesRef.child(this.editingMessage.id).set({text: this.messageText})
+          this.cancelMessage()
         }
     },
     created() {
