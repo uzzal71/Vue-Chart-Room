@@ -63,6 +63,7 @@
     methods: {
       storeMessage () {
         this.messages.push({text: this.messageText, nickname: this.nickname})
+        database.ref('messages').push().set({text: this.messageText, nickname: this.nickname})
         this.messageText = ''
       }
     },
