@@ -16,9 +16,12 @@
       <!-- nickname -->
       <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
       <!-- content -->
-      <p class="card-text">{{ message.text }}</p>
+      <p v-if="message !== editingMessage" class="card-text">{{ message.text }}</p>
+      <!-- edit text area -->
+      <textarea v-else v-model="messageText" class="form-control"></textarea>
       <!-- actions -->
       <a @click.prevent="deleteMessage(message)" href="#" class="cart-link">Delete</a>
+      <a @click.prevent="editMessage(message)" href="#" class="cart-link">Edit</a>
     </div>
   </div>
 
@@ -62,7 +65,8 @@
     data: {
         messages: [],
         messageText: '',
-        nickname: 'Uzzalroy'
+        nickname: 'Uzzalroy',
+        editingMessage: null
     },
     methods: {
         storeMessage () {
@@ -71,6 +75,9 @@
         },
         deleteMessage(message) {
           messagesRef.child(message.id).remove()
+        },
+        editMessage(message) {
+          this.editingMessage = message
         }
     },
     created() {
