@@ -76,6 +76,12 @@
     created() {
       // value = snaoshot.val() | snapshot.key
         messagesRef.on('child_added', snapshot => this.messages.push({...snapshot.val(), id: snapshot.key}))
+        // remove event changed listener
+        messagesRef.on('child_removed', snapshot => {
+          const deleteMessage = this.messages.find(message => message.id === snapshot.key)
+          const index = this.messages.indexOf(deleteMessage)
+          this.messages.splice(index, 1)
+        })
     }
     })
 </script>
