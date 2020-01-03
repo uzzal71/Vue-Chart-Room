@@ -53,8 +53,6 @@
 
     const database = firebase.database()
 
-    database.ref('messages').on('value', snapshot => console.log(snapshot.val()))
-
   new Vue({
     el: "#chat",
     data: {
@@ -67,6 +65,9 @@
         this.messages.push({text: this.messageText, nickname: this.nickname})
         this.messageText = ''
       }
+    },
+    created() {
+        database.ref('messages').on('child_added', snapshot => this.messages.push(snapshot.val()))
     }
   })
 </script>
