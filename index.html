@@ -53,7 +53,7 @@
 
     const database = firebase.database()
 
-    database.ref('who').child('am').child('i').set('alex')
+    database.ref('who').child('am/i').set('not alex')
 
     new Vue({
     el: "#chat",
